@@ -3,6 +3,7 @@ require 'mysql2-cs-bind'
 require 'rack-flash'
 require 'shellwords'
 require 'rack/session/dalli'
+require 'openssl'
 # require 'rack-mini-profiler'
 # require 'stackprof'
 # require 'rack-lineprof'
@@ -89,7 +90,7 @@ module Isuconp
 
       def digest(src)
         # opensslのバージョンによっては (stdin)= というのがつくので取る
-        `printf "%s" #{Shellwords.shellescape(src)} | openssl dgst -sha512 | sed 's/^.*= //'`.strip
+        OpenSSL::Digest::SHA512.hexdigest(src)
       end
 
       def calculate_salt(account_name)
