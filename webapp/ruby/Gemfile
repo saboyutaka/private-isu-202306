@@ -1,0 +1,21 @@
+# A sample Gemfile
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "sinatra-contrib"
+gem "rack"
+gem "foreman"
+gem "unicorn"
+gem "mysql2"
+gem "rack-flash3"
+gem 'connection_pool'
+gem "dalli"
+gem 'falcon'
+
+group :development do
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+  gem 'stackprof'
+  gem 'puma'
+  gem 'rack-lineprof'
+end
