@@ -3,16 +3,16 @@ require 'mysql2'
 require 'rack-flash'
 require 'shellwords'
 require 'rack/session/dalli'
-require 'rack-mini-profiler'
-require 'stackprof'
-require 'rack-lineprof'
+# require 'rack-mini-profiler'
+# require 'stackprof'
+# require 'rack-lineprof'
 
 module Isuconp
   class App < Sinatra::Base
     use Rack::Session::Dalli, autofix_keys: true, secret: ENV['ISUCONP_SESSION_SECRET'] || 'sendagaya', memcache_server: ENV['ISUCONP_MEMCACHED_ADDRESS'] || 'localhost:11211'
     use Rack::Flash
-    use Rack::MiniProfiler
-    use Rack::Lineprof
+    # use Rack::MiniProfiler
+    # use Rack::Lineprof
     set :public_folder, File.expand_path('../../public', __FILE__)
 
     UPLOAD_LIMIT = 10 * 1024 * 1024 # 10mb
