@@ -24,7 +24,7 @@ db-restart: ## restart mysql
 	sudo systemctl restart mysql
 
 query-digester: ## Run query-digester
-	sudo query-digester -duration 20
+	sudo query-digester -duration 10
 
 .PHONY: help
 help:

@@ -252,7 +252,7 @@ module Isuconp
 
       query = <<~QUERY
         SELECT p.id, p.user_id, p.body, p.created_at, p.mime, u.account_name
-        FROM `posts` AS p
+        FROM `posts` AS p FORCE INDEX(`posts_order_idx`)
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE u.del_flg = 0
         ORDER BY p.created_at DESC
@@ -273,7 +273,7 @@ module Isuconp
 
       query = <<~QUERY
         SELECT p.id, p.user_id, p.body, p.created_at, p.mime, u.account_name
-        FROM `posts` AS p
+        FROM `posts` AS p FORCE INDEX(`posts_user_idx`)
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE p.user_id = ?
           AND u.del_flg = 0
