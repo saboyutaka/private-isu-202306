@@ -1,5 +1,8 @@
 .DEFAULT_GOAL := help
 
+ruby-restart: ## Restart isu-ruby.service
+	sudo systemctl restart isu-ruby.service
+
 alp: ## Shwo alp
 	cat /var/log/nginx/access.log | alp json --sort sum -r -m "/posts/[0-9]+, /@\w,/image/\d+" -o count,method,uri,min,avg,max,sum
 
