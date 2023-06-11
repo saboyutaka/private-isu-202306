@@ -1,0 +1,10 @@
+ALTER TABLE posts ADD INDEX posts_order_idx(created_at DESC);
+ALTER TABLE `posts` ADD INDEX `posts_user_idx` (`user_id`,`created_at` DESC);
+
+ALTER TABLE `isuconp`.`comments`
+ADD INDEX `comments_post_id_idx` (`post_id`) USING BTREE,
+ADD INDEX `comments_user_id_idx` (`user_id`) USING BTREE;
+
+ALTER TABLE `isuconp`.`users`
+ADD INDEX `users_authority_idx` (`authority`) USING BTREE,
+ADD INDEX `users_del_flg_idx` (`del_flg`) USING BTREE;
