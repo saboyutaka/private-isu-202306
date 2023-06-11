@@ -111,11 +111,14 @@ module Isuconp
 
       def make_posts(results, all_comments: false)
         posts = []
+
+        count_keys = results.to_a.map { |post| "comments.#{post[:id]}.count" }
+        cached_counts = memcached.get_multi(count_keys)
+
         results.to_a.each do |post|
           # コメント件数
-          cached_comments_count = memcached.get("comments.#{post[:id]}.count")
-          if cached_comments_count
-            post[:comment_count] = cached_comments_count.to_i
+          if cached_counts["comments.#{post[:id]}.count"]
+            post[:comment_count] = cached_counts["comments.#{post[:id]}.count"].to_i
           else
             post[:comment_count] = db.xquery('SELECT COUNT(*) AS `count` FROM `comments` WHERE `post_id` = ?', post[:id]).first[:count]
             memcached.set("comments.#{post[:id]}.count", post[:comment_count], 10)
