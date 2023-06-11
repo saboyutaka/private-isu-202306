@@ -110,7 +110,7 @@ module Isuconp
             post[:id]
           ).first[:count]
 
-          query = 'SELECT * FROM `comments` WHERE `post_id` = ? ORDER BY `id` DESC'
+          query = 'SELECT * FROM `comments` WHERE `post_id` = ? ORDER BY `created_at` DESC'
           unless all_comments
             query += ' LIMIT 3'
           end
@@ -250,7 +250,7 @@ module Isuconp
         FROM `posts` AS p
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE u.del_flg = 0
-        ORDER BY p.id DESC
+        ORDER BY p.created_at DESC
         LIMIT 20
       QUERY
       results = db.query(query)
@@ -274,7 +274,7 @@ module Isuconp
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE p.user_id = ?
           AND u.del_flg = 0
-        ORDER BY p.id DESC
+        ORDER BY p.created_at DESC
         LIMIT 20
       QUERY
       results = db.prepare(query).execute(user[:id])
@@ -310,7 +310,7 @@ module Isuconp
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE p.created_at <= ?
           AND u.del_flg = 0
-        ORDER BY p.id DESC
+        ORDER BY p.created_at DESC
         LIMIT 20
       QUERY
       results = db.prepare(query).execute(
@@ -328,7 +328,7 @@ module Isuconp
         JOIN `users` AS u ON (p.user_id = u.id)
         WHERE p.id = ?
           AND u.del_flg = 0
-        ORDER BY p.id DESC
+        ORDER BY p.created_at DESC
         LIMIT 20
       QUERY
       results = db.prepare(query).execute(
@@ -446,7 +446,7 @@ module Isuconp
         return 403
       end
 
-      users = db.query('SELECT * FROM `users` WHERE `authority` = 0 AND `del_flg` = 0 ORDER BY `id` DESC')
+      users = db.query('SELECT * FROM `users` WHERE `authority` = 0 AND `del_flg` = 0 ORDER BY `created_at` DESC')
 
       erb :banned, layout: :layout, locals: { users: users, me: me }
     end
